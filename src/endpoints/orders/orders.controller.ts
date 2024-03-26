@@ -14,14 +14,7 @@ export class OrdersController {
 
   @Post()
   create(@Body() createOrderDto: CreateOrderDto) {
-    return new Promise<Message>((resolve, reject) => {
-      this.ordersService.create(createOrderDto)
-      .then((result) => {
-        resolve(result);
-      }).catch((err : Exception) => {
-        reject(err)
-      });
-    });
+    return this.ordersService.create(createOrderDto);
   }
 
 }

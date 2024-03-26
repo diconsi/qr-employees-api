@@ -21,14 +21,7 @@ export class QrsController {
 
   @Get(':id')
   getQr(@Param('id') qrId: string) {
-    return new Promise<Qr>((resolve, reject) => {
-      this.qrsService.findQr(qrId)
-        .then((result) => {
-          resolve(result);
-        }).catch((err: Exception) => {
-          reject(err.getException());
-        });
-    })
+    return this.qrsService.findQr(qrId);
   }
 
   @Post("assign")
@@ -41,75 +34,21 @@ export class QrsController {
     return this.qrsService.detachHanger(qr)
   }
 
-
-
-  /**
-   * functions related to the item list
-   * @param clubId 
-   * @returns 
-   */
+  /** functions related to the item list */
 
   @Get()
   listQrs(@Query('clubId') clubId: string) {
-    return new Promise<Array<Qr>>((resolve, reject) => {
-      this.qrsService.listQrs(clubId)
-        .then((result) => {
-          resolve(result);
-        }).catch((err: Exception) => {
-          reject(err);
-        });
-    })
+    return this.qrsService.listQrs(clubId);
   }
 
   @Get('breaks')
   listAllActiveBreaks() {
-    return new Promise<Map<string, any>>((resolve, reject) => {
-      this.qrsService.listBreaks()
-        .then((result) => {
-          console.log(result);
-          resolve(result)
-        }).catch((err: Exception) => {
-          reject(err);
-        });
-    });
-  }
-
-  
-
-  @Patch(':id')
-  updateQr(@Param('id') qrId: string, @Body() qr: Qr) {
-    return new Promise<any>((resolve, reject) => {
-      this.qrsService.updateQr(qrId, qr)
-        .then((result) => {
-          resolve(result);
-        }).catch((err: Exception) => {
-          reject(err);
-        });
-    })
+    return this.qrsService.listBreaks();
   }
 
   @Patch("break/:id")
   takeBreak(@Param('id') qrId: string) {
-    return new Promise<Message>((resolve, reject) => {
-      this.qrsService.takeBreakTime(qrId)
-        .then((result: Message) => {
-          resolve(result);
-        }).catch((err: Exception) => {
-          reject(err.getException());
-        });
-    })
-  }
-
-  @Patch("break/stop/:id")
-  stopBreak(@Param('id') qrId: string) {
-    return new Promise<Message>((resolve, reject) => {
-      this.qrsService.stopBreakTime(qrId)
-        .then((result: Message) => {
-          resolve(result);
-        }).catch((err: Exception) => {
-          reject(err.getException());
-        });
-    })
+    return this.qrsService.takeBreakTime(qrId);
   }
 
 }
